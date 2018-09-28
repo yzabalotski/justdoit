@@ -19,7 +19,7 @@ HTTP/1.1 200 Created
 ```
 #### create new todo list
 Client should not go directly to /justdoit/new and should use link from
-"addList" instead.
+"addList" instead.<br>
 REQUEST:
 ```
 POST /justdoit/new
@@ -61,7 +61,7 @@ RESPONSE:
 ```
 #### add a task to the todo list
 Client should not go directly to /justdoit/{id}/new and should use link from
-"addTask" instead.
+"addTask" instead.<br>
 REQUEST:
 ```
 POST /justdoit/{id}/new
