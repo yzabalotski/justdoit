@@ -2,8 +2,24 @@
 one more todo list implementation - university project
 
 ## API
-
+#### get api description
+REQUEST:
+```
+GET /justdoit
+Accept: application/json
+{
+	"_links": {
+		"addList": { "href": "/justdoit/new" },
+	}
+}
+```
+RESPONSE:
+```
+HTTP/1.1 200 Created
+```
 #### create new todo list
+Client should not go directly to /justdoit/new and should use link from
+"addList" instead.
 REQUEST:
 ```
 POST /justdoit/new
@@ -44,6 +60,8 @@ RESPONSE:
 }
 ```
 #### add a task to the todo list
+Client should not go directly to /justdoit/{id}/new and should use link from
+"addTask" instead.
 REQUEST:
 ```
 POST /justdoit/{id}/new
