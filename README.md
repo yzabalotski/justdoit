@@ -60,3 +60,50 @@ RESPONSE:
 HTTP/1.1 201 Created
 Location: /justdoit/{id}/{taskId}
 ```
+#### remove the task
+REQUEST:
+```
+DELETE /justdoit/{id}/{taskId}
+```
+RESPONSE:
+```
+HTTP/1.1 200 OK
+```
+#### remove the todo list
+REQUEST:
+```
+DELETE /justdoit/{id}
+```
+RESPONSE:
+```
+HTTP/1.1 200 OK
+```
+#### modify the task
+REQUEST:
+```
+PUT /justdoit/{id}/{taskId}
+{
+	"task": {
+		"title": "new task title",
+		"briefDescription": "new brief description",
+	}
+}
+```
+RESPONSE:
+```
+HTTP/1.1 200 OK
+```
+#### modify the list
+REQUEST:
+```
+PUT /justdoit/{id}/
+{
+	"todo": {
+		"title": "new todo list title",
+	}
+}
+```
+RESPONSE:
+```
+HTTP/1.1 200 OK
+```
