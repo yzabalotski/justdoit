@@ -42,20 +42,33 @@ GET /justdoit/{id}
 ```
 RESPONSE:
 ```
+Content-Type: application/vnd.collection+json
 {
-	"todo": {
-		"title": "todo list title",
-		"tasks": [
+	"collection" : {
+		"version" : "1.0",
+		"href": "/justdoit/{id}",
+		"title": "todo list title"
+		"items": [
 			{
-				"self": { "href": "/justdoit/{id}/{taskId}" },
-				"title": "task title",
-				"briefDescription": "brief task description",
+				"href": "/justdoit/{id}/{taskId}",
+				"data": [
+					{
+						"name": "title",
+						"value": "task title",
+					},
+					{
+						"name": "briefDescription",
+						"value": "brief task description",
+					}
+				]
 			},
 		]
-	}
-	"_links:" {
-		"self": { "href": "/justdoit/{id}" },
-		"addTask": { "href": "/justdoit/{id}/new" },
+		"queries:" [
+			{
+				"rel": "add",
+				"href": "/justdoit/{id}/new",
+			},
+		]
 	}
 }
 ```
