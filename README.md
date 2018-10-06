@@ -51,11 +51,17 @@ Content-Type: application/vnd.api+json
 		"id": "1",
 		"type": "todolist",
 		"attributes": { "title": "title of the todolist", },
+		"relationships": {
+			"tasks": {
+				"links": {
+					"related": {
+						"href": "/justdoit/todolists/{id}/tasks",
+					},
+				},
+			},
+		},
 	},
-	"links": {
-		"self": { "href": "/justdoit/todolists/{id}" },
-		"tasks": { "href": "/justdoit/todolists/{id}/tasks" },
-	},
+	"links": { "self": { "href": "/justdoit/todolists/{id}" }, },
 }
 ```
 #### create new todo list
