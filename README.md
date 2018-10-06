@@ -1,6 +1,12 @@
 # justdoit
 one more todo list implementation - university project
 
+## TODO list description
+Each todolist consists of a title field and a list of tasks.
+
+### Task description
+Each task consists of a title field and a description field.
+
 ## API
 API is based on vnd.api+json.
 #### get api description
