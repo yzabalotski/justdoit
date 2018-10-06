@@ -122,8 +122,7 @@ Content-Type: application/vnd.api+json
 			"title": "title of the task",
 			"description": "description of the task",
 		},
-	},
-	"links": { "self": { "href": "/justdoit/todolists/{id}" }, },
+	}
 }
 ```
 RESPONSE:
