@@ -106,7 +106,7 @@ Content-Type: application/vnd.api+json
 			"links": { "self": { "href": "/justdoit/todolists/{id}/tasks/{taskId}" } },
 		},
 	],
-	"links": { "self": { "href": "/justdoit/todolists/{id}" } },
+	"links": { "self": { "href": "/justdoit/todolists/{id}" }, },
 }
 ```
 #### add a task to the todo list
@@ -123,6 +123,7 @@ Content-Type: application/vnd.api+json
 			"description": "description of the task",
 		},
 	},
+	"links": { "self": { "href": "/justdoit/todolists/{id}" }, },
 }
 ```
 RESPONSE:
@@ -143,6 +144,8 @@ HTTP/1.1 200 OK
 REQUEST:
 ```
 PATCH /justdoit/todolists/{id}/tasks/{taskId}
+Accept: application/vnd.api+json
+Content-Type: application/vnd.api+json
 {
 	"data": {
 		"id": "taskId",
@@ -159,6 +162,8 @@ HTTP/1.1 200 OK
 REQUEST:
 ```
 PATCH /justdoit/todolists/{id}
+Accept: application/vnd.api+json
+Content-Type: application/vnd.api+json
 {
 	"data": {
 		"id": "todolist id",
