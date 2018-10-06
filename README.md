@@ -2,108 +2,138 @@
 one more todo list implementation - university project
 
 ## API
+API is based on vnd.api+json.
 #### get api description
 REQUEST:
 ```
 GET /justdoit
-Accept: application/json
+```
+RESPONSE:
+```
+Content-Type: application/json
 {
 	"_links": {
-		"addList": { "href": "/justdoit/new" },
-	}
+		"todolists": { "href": "/justdoit/todolists" },
+	},
 }
 ```
-RESPONSE:
-```
-HTTP/1.1 200 Created
-```
-#### create new todo list
-Client should not go directly to /justdoit/new and should use link from
-"addList" instead.<br>
+#### get todolists
 REQUEST:
 ```
-POST /justdoit/new
-Accept: application/json
-{
-	"todo": {
-		"title": "todo list title",
-	}
-}
+GET /justdoit/todolists
+Accept: application/vnd.api+json
 ```
 RESPONSE:
 ```
-HTTP/1.1 201 Created
-Location: /justdoit/{id}
+Content-Type: application/vnd.api+json
+{
+	"data": [
+		{
+			"id": "todolist id",
+			"type": "todolist",
+			"attributes": { "title": "title of the todolist", },
+			"links": { "self: { "href": "/justdoit/todolists/{id} } },
+		},
+	],
+}
 ```
 #### get the todo list
 REQUEST:
 ```
-GET /justdoit/{id}
+GET /justdoit/todolists/{id}
+Accept: application/vnd.api+json
 ```
 RESPONSE:
 ```
-Content-Type: application/vnd.collection+json
+Content-Type: application/vnd.api+json
 {
-	"collection" : {
-		"version" : "1.0",
-		"href": "/justdoit/{id}",
-		"title": "todo list title"
-		"items": [
-			{
-				"href": "/justdoit/{id}/{taskId}",
-				"data": [
-					{
-						"name": "title",
-						"value": "task title",
-					},
-					{
-						"name": "briefDescription",
-						"value": "brief task description",
-					}
-				]
-			},
-		]
-		"queries:" [
-			{
-				"rel": "add",
-				"href": "/justdoit/{id}/new",
-			},
-		]
-	}
+	"data": {
+		"id": "1",
+		"type": "todolist",
+		"attributes": { "title": "title of the todolist", },
+	},
+	"links": {
+		"self": { "href": "/justdoit/todolists/{id}" },
+		"tasks": { "href": "/justdoit/todolists/{id}/tasks" },
+	},
 }
 ```
-#### add a task to the todo list
-Client should not go directly to /justdoit/{id}/new and should use link from
-"addTask" instead.<br>
+#### create new todo list
 REQUEST:
 ```
-POST /justdoit/{id}/new
-Accept: application/json
+POST /justdoit/todolists
+Accept: application/vnd.api+json
+Content-Type: application/vnd.api+json
 {
-	"task": {
-		"title": "task title",
-		"briefDescription": "brief task description",
-	}
+	"data": {
+		"type": "todolist",
+		"attributes": { "title": "title of the todolist", },
+	},
 }
 ```
 RESPONSE:
 ```
 HTTP/1.1 201 Created
-Location: /justdoit/{id}/{taskId}
+Location: /justdoit/todolists/{id}
 ```
-#### remove the task
+#### remove the todo list
 REQUEST:
 ```
-DELETE /justdoit/{id}/{taskId}
+DELETE /justdoit/todolists/{id}
 ```
 RESPONSE:
 ```
 HTTP/1.1 200 OK
 ```
-#### remove the todo list
+#### get tasks for the todolist
 REQUEST:
 ```
-DELETE /justdoit/{id}
+GET /justdoit/todolists/{id}/tasks
+Accept: application/vnd.api+json
+```
+RESPONSE:
+```
+Content-Type: application/vnd.api+json
+{
+	"data": [
+		{
+			"id": "task id",
+			"type": "task",
+			"attributes": {
+				"title": "title of the task",
+				"description": "description of the task",
+			},
+			"links": { "self": { "href": "/justdoit/todolists/{id}/tasks/{taskId}" } },
+		},
+	],
+	"links": { "self": { "href": "/justdoit/todolists/{id}" } },
+}
+```
+#### add a task to the todo list
+REQUEST:
+```
+POST /justdoit/todolists/{id}/tasks
+Accept: application/vnd.api+json
+Content-Type: application/vnd.api+json
+{
+	"data": {
+		"type": "task",
+		"attributes": {
+			"title": "title of the task",
+			"description": "description of the task",
+		},
+	},
+}
+```
+RESPONSE:
+```
+HTTP/1.1 201 Created
+Location: /justdoit/todolists/{id}/tasks/{taskId}
+```
+#### remove the task
+REQUEST:
+```
+DELETE /justdoit/todolists/{id}/tasks/{taskId}
 ```
 RESPONSE:
 ```
@@ -112,12 +142,13 @@ HTTP/1.1 200 OK
 #### modify the task
 REQUEST:
 ```
-PUT /justdoit/{id}/{taskId}
+PATCH /justdoit/todolists/{id}/tasks/{taskId}
 {
-	"task": {
-		"title": "new task title",
-		"briefDescription": "new brief description",
-	}
+	"data": {
+		"id": "taskId",
+		"type": "task",
+		"attributes": { "description": "new description here", },
+	},
 }
 ```
 RESPONSE:
@@ -127,10 +158,12 @@ HTTP/1.1 200 OK
 #### modify the list
 REQUEST:
 ```
-PUT /justdoit/{id}/
+PATCH /justdoit/todolists/{id}
 {
-	"todo": {
-		"title": "new todo list title",
+	"data": {
+		"id": "todolist id",
+		"type": "todolist",
+		"attributes": { "title": "new title here", },
 	}
 }
 ```
