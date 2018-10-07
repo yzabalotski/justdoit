@@ -60,14 +60,10 @@ void handle_get(http_request request)
 DPRINT("\nGET:url:" + uri::decode(request.relative_uri().path()) + "\n");
 
 auto path = uri::split_path(uri::decode(request.relative_uri().path()));
-
-size_t idx = 0U;
-if (idx >= path.size() || path[idx] != "todolists") {
+if (path.size() && path[0] == "todolists")
+	handle_todolists_url(request, 0, path);
+else
 	request.reply(status_codes::NotFound);
-	return;
-}
-
-handle_todolists_url(request, idx, path);
 }
 
 int main(void)
