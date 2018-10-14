@@ -60,10 +60,15 @@ void handle_get(http_request request)
 DPRINT("\nGET:url:" + uri::decode(request.relative_uri().path()) + "\n");
 
 auto path = uri::split_path(uri::decode(request.relative_uri().path()));
-if (path.size() && path[0] == "todolists")
+if (!path.size()) {
+	request.reply(
+		status_codes::OK,
+		json::value::parse("{\"_links\":{\"todolists\":{\"href\":\"/justdoit/todolists\"}}}"));
+} else if (path[0] == "todolists") {
 	handle_todolists_url(request, 0, path);
-else
+} else {
 	request.reply(status_codes::NotFound);
+}
 }
 
 int main(void)
